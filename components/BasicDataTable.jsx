@@ -25,57 +25,57 @@ const BasicDataTable = () => {
         {
             header: 'Trade ID',
             accessor: 'trade_id',
-            // footer: 'Trade ID'
+            footer: 'Trade ID'
         },
         {
             header: 'Stock Symbol',
             accessor: 'stock_symbol',
-            // footer: 'Stock Symbol'
+            footer: 'Stock Symbol'
         },
         {
             header: 'Stock Picture',
             accessor: 'stock_picture',
-            // footer: 'Stock Picture'
+            footer: 'Stock Picture'
         },
         {
             header: 'Trade Date',
             accessor: 'trade_date',
-            // footer: 'Trade Date'
+            footer: 'Trade Date'
         },
         {
             header: 'Trade Time',
             accessor: 'trade_time',
-            // footer: 'Trade Time'
+            footer: 'Trade Time'
         },
         {
             header: 'Trade Price',
             accessor: 'trade_price',
-            // footer: 'Trade Price'
+            footer: 'Trade Price'
         },
         {
             header: 'Trade Quantity',
             accessor: 'trade_quantity',
-            // footer: 'Trade Quantity'
+            footer: 'Trade Quantity'
         },
         {
             header: 'Buyer ID',
             accessor: 'buyer_id',
-            // footer: 'Buyer ID'
+            footer: 'Buyer ID'
         },
         {
             header: 'Seller ID',
             accessor: 'seller_id',
-            // footer: 'Seller ID'
+            footer: 'Seller ID'
         },
         {
             header: 'Buyer Email',
             accessor: 'buyer_email',
-            // footer: 'Buyer Email'
+            footer: 'Buyer Email'
         },
         {
             header: 'Seller Email',
             accessor: 'seller_email',
-            // footer: 'Seller Email'
+            footer: 'Seller Email'
         }
     ]
 
@@ -87,7 +87,7 @@ const BasicDataTable = () => {
 
     return (
         <>
-            <div className='flex justify-center items-center'>Basic Data Table</div>
+            <div className='flex justify-center items-center font-bold'>Basic Data Table</div>
             <div className='flex justify-center items-center'>
                 <table>
                     <thead>
@@ -112,17 +112,17 @@ const BasicDataTable = () => {
                             </tr>
                         ))}
                     </tbody>
-                    {/* <tfoot>
-                    {table.getHeaderGroups().map(headerGroup => (
-                        <tr key={headerGroup.id} className='flex items-center justify-center gap-1'>
-                            {headerGroup.headers.map(header => (
-                                <th key={header.id}>
-                                    {flexRender(header.column.columnDef.header, header.getContext())}
-                                </th>
-                            ))}
-                        </tr>
-                    ))}
-                </tfoot> */}
+                    <tfoot>
+                        {table.getHeaderGroups().map(headerGroup => (
+                            <tr key={headerGroup.id} className='flex items-center justify-center gap-1'>
+                                {headerGroup.headers.map(header => (
+                                    <th key={header.id}>
+                                        {flexRender(header.column.columnDef.header, header.getContext())}
+                                    </th>
+                                ))}
+                            </tr>
+                        ))}
+                    </tfoot>
                 </table>
             </div>
         </>
