@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import tradesData from '../services/TRADE_DATA.json'
+import { format } from 'date-fns'
 import { flexRender, useReactTable, getCoreRowModel, getPaginationRowModel } from '@tanstack/react-table'
 
 const BasicDataTable = () => {
@@ -28,57 +29,62 @@ const BasicDataTable = () => {
     const columns = [
         {
             header: 'Trade ID',
-            accessor: 'trade_id',
+            accessorKey: 'trade_id',
             footer: 'Trade ID'
         },
         {
             header: 'Stock Symbol',
-            accessor: 'stock_symbol',
+            accessorKey: 'stock_symbol',
             footer: 'Stock Symbol'
         },
         {
             header: 'Stock Picture',
-            accessor: 'stock_picture',
-            footer: 'Stock Picture'
+            accessorKey: 'stock_picture',
+            footer: 'Stock Picture',
+            cell: info => <img src={info.getValue()} alt="Avatar" />
         },
         {
             header: 'Trade Date',
-            accessor: 'trade_date',
-            footer: 'Trade Date'
+            accessorKey: 'trade_date',
+            footer: 'Trade Date',
+            cell: info =>
+                format(new Date(info.getValue()), 'ko MMM yyyy') // uisng date-fns
+            // DateTime.fromFormat(info.getValue(), 'M/d/yyyy').toFormat('LLL d, yyyy') // using luxon
+            // DateTime.fromISO(info.getValue()).toLocaleString(DateTime.DATE_MED), // using luxon
         },
         {
             header: 'Trade Time',
-            accessor: 'trade_time',
+            accessorKey: 'trade_time',
             footer: 'Trade Time'
         },
         {
             header: 'Trade Price',
-            accessor: 'trade_price',
+            accessorKey: 'trade_price',
             footer: 'Trade Price'
         },
         {
             header: 'Trade Quantity',
-            accessor: 'trade_quantity',
+            accessorKey: 'trade_quantity',
             footer: 'Trade Quantity'
         },
         {
             header: 'Buyer ID',
-            accessor: 'buyer_id',
+            accessorKey: 'buyer_id',
             footer: 'Buyer ID'
         },
         {
             header: 'Seller ID',
-            accessor: 'seller_id',
+            accessorKey: 'seller_id',
             footer: 'Seller ID'
         },
         {
             header: 'Buyer Email',
-            accessor: 'buyer_email',
+            accessorKey: 'buyer_email',
             footer: 'Buyer Email'
         },
         {
             header: 'Seller Email',
-            accessor: 'seller_email',
+            accessorKey: 'seller_email',
             footer: 'Seller Email'
         }
     ]
@@ -108,8 +114,8 @@ const BasicDataTable = () => {
                     </thead>
                     <tbody>
                         {table.getRowModel().rows.length ? (
-                            table.getRowModel().rows.map((row) => (
-                                <tr key={row.id}>
+                            table.getRowModel().rows.map((row, i) => (
+                                <tr key={row.id} className={`${i % 2 === 0 ? 'bg-gray-100' : ''} flex items-center justify-center`}>
                                     {row.getVisibleCells().map((cell) => (
                                         <td key={cell.id} className="px-3.5 py-2">
                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -146,20 +152,20 @@ const BasicDataTable = () => {
                 </table>
             </div>
             <div className='flex justify-center items-center'>
-                <button className='mx-5' onClick={() => table.setPageIndex(0)}>First page</button>
-                <button className='mx-5'
+                <button className='mx-5 p-5 bg-blue-500 text-white font-mono' onClick={() => table.setPageIndex(0)}>First page</button>
+                <button className={`${!table.getCanPreviousPage() ? 'opacity-50 cursor-not-allowed' : ''} mx-5 p-5 bg-blue-500 text-white font-mono`}
                     disabled={!table.getCanPreviousPage()}
                     onClick={() => table.previousPage()}
                 >
-                    Previous page
+                    <span className='p-5 bg-blue-500 text-white font-mono'>Previous page</span>
                 </button>
-                <button className='mx-5'
+                <button className='mx-5 p-5 bg-blue-500 text-white font-mono'
                     disabled={!table.getCanNextPage()}
                     onClick={() => table.nextPage()}
                 >
                     Next page
                 </button>
-                <button className='mx-5' onClick={() => table.setPageIndex(table.getPageCount() - 1)}>
+                <button className='mx-5 p-5 bg-blue-500 text-white font-mono' onClick={() => table.setPageIndex(table.getPageCount() - 1)}>
                     Last page
                 </button>
             </div>
