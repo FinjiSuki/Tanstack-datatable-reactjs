@@ -1,8 +1,12 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import tradesData from '../services/TRADE_DATA.json'
-import { flexRender, useReactTable, getCoreRowModel } from '@tanstack/react-table'
+import { flexRender, useReactTable, getCoreRowModel, getPaginationRowModel } from '@tanstack/react-table'
 
 const BasicDataTable = () => {
+
+    const demoData = []
+
+    // const [data, setData] = useState([...demoData])
 
     const data = useMemo(() => tradesData, [])
 
@@ -83,6 +87,7 @@ const BasicDataTable = () => {
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
     })
 
     return (
@@ -102,7 +107,22 @@ const BasicDataTable = () => {
                         ))}
                     </thead>
                     <tbody>
-                        {table.getRowModel().rows.map(row => (
+                        {table.getRowModel().rows.length ? (
+                            table.getRowModel().rows.map((row) => (
+                                <tr key={row.id}>
+                                    {row.getVisibleCells().map((cell) => (
+                                        <td key={cell.id} className="px-3.5 py-2">
+                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))
+                        ) : (
+                            <tr className="text-center h-32">
+                                <td colSpan={columns.length}>No Record Found!</td>
+                            </tr>
+                        )}
+                        {/* {table.getRowModel().rows.map(row => (
                             <tr key={row.id}>
                                 {row.getVisibleCells().map(cell => (
                                     <td key={cell.id}>
@@ -110,7 +130,7 @@ const BasicDataTable = () => {
                                     </td>
                                 ))}
                             </tr>
-                        ))}
+                        ))} */}
                     </tbody>
                     <tfoot>
                         {table.getHeaderGroups().map(headerGroup => (
@@ -125,6 +145,25 @@ const BasicDataTable = () => {
                     </tfoot>
                 </table>
             </div>
+            <div className='flex justify-center items-center'>
+                <button className='mx-5' onClick={() => table.setPageIndex(0)}>First page</button>
+                <button className='mx-5'
+                    disabled={!table.getCanPreviousPage()}
+                    onClick={() => table.previousPage()}
+                >
+                    Previous page
+                </button>
+                <button className='mx-5'
+                    disabled={!table.getCanNextPage()}
+                    onClick={() => table.nextPage()}
+                >
+                    Next page
+                </button>
+                <button className='mx-5' onClick={() => table.setPageIndex(table.getPageCount() - 1)}>
+                    Last page
+                </button>
+            </div>
+            {/* <pre>{data}</pre> */}
         </>
     )
 }
