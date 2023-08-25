@@ -3,13 +3,15 @@ import tradesData from '../../services/TRADE_DATA.json'
 import { format } from 'date-fns'
 import { BiFirstPage, BiLastPage } from 'react-icons/bi'
 import { GrFormPrevious, GrFormNext } from 'react-icons/gr'
-import { flexRender, useReactTable, getCoreRowModel, getPaginationRowModel } from '@tanstack/react-table'
+import { flexRender, useReactTable, getCoreRowModel, getPaginationRowModel, getSortedRowModel } from '@tanstack/react-table'
 
 const BasicDataTable = () => {
 
     const demoData = []
 
     // const [data, setData] = useState([...demoData])
+
+    const [sorting, setSorting] = useState([])
 
     // const data = []
     const data = useMemo(() => tradesData, [])
@@ -97,6 +99,11 @@ const BasicDataTable = () => {
         columns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        state: {
+            sorting: sorting
+        },
+        onSortingChange: setSorting
     })
 
     return (
@@ -113,8 +120,16 @@ const BasicDataTable = () => {
                                 {table.getHeaderGroups().map(headerGroup => (
                                     <tr key={headerGroup.id}>
                                         {headerGroup.headers.map(header => (
-                                            <th key={header.id} className='p-2 whitespace-nowrap'>
-                                                <div className='font-bold text-center'>{flexRender(header.column.columnDef.header, header.getContext())}</div>
+                                            <th key={header.id} className='p-2 whitespace-nowrap' onClick={header.column.getToggleSortingHandler()}>
+                                                <div className='font-bold text-center'>
+                                                    {flexRender(header.column.columnDef.header, header.getContext())}
+                                                    {
+                                                        { asc: ' 🔼', desc: ' 🔽' }
+                                                        [
+                                                        header.column.getIsSorted() ?? null
+                                                        ]
+                                                    }
+                                                </div>
                                             </th>
                                         ))}
                                     </tr>
