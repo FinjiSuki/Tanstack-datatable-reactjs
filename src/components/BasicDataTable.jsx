@@ -1,107 +1,17 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import tradesData from '../../services/TRADE_DATA.json'
-import { format } from 'date-fns'
-import { DateTime } from 'luxon'
+import React, { useState } from 'react'
 import { BiFirstPage, BiLastPage } from 'react-icons/bi'
-import { GrFormPrevious, GrFormNext } from 'react-icons/gr'
+import { FcPrevious, FcNext } from 'react-icons/fc'
+import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md'
 import { flexRender, useReactTable, getCoreRowModel, getPaginationRowModel, getSortedRowModel, getFilteredRowModel } from '@tanstack/react-table'
 
-const BasicDataTable = () => {
-
-    const demoData = []
-
-    // const [data, setData] = useState([...demoData])
+const BasicDataTable = ({ tableTitle, data, columns, bgColor, txtColor }) => {
 
     const [sorting, setSorting] = useState([])
     const [filtering, setFiltering] = useState('')
 
-    // const data = []
-    const data = useMemo(() => tradesData, [])
-
-    // {
-    //     "trade_id": 1000485941,
-    //     "stock_symbol": "ULTRACEMCO",
-    //     "stock_picture": "https://robohash.org/etadipisciodio.png?size=50x50&set=set1",
-    //     "trade_date": "7/19/2017",
-    //     "trade_time": 9,
-    //     "trade_price": 5067.48,
-    //     "trade_quantity": 333,
-    //     "buyer_id": "6242",
-    //     "seller_id": 1428,
-    //     "buyer_email": "rdwire0@mozilla.org",
-    //     "seller_email": "apearcy0@studiopress.com"
-    // }
-
-    /** @type import('@tanstack/react-table').ColumnDef<any> */
-    const columns = [
-        {
-            header: 'Trade ID',
-            accessorKey: 'trade_id.$oid',
-            footer: 'Trade ID',
-            cell: info => <div className='overflow-hidden whitespace-nowrap text-ellipsis w-20' style={{direction: 'rtl'}}>{info.getValue()}</div> 
-        },
-        {
-            header: 'Stock Symbol',
-            accessorKey: 'stock_symbol',
-            footer: 'Stock Symbol'
-        },
-        {
-            header: 'Stock Picture',
-            accessorKey: 'stock_picture',
-            footer: 'Stock Picture',
-            cell: info => <img src={info.getValue()} alt="Avatar" />
-        },
-        {
-            header: 'Trade Date',
-            accessorKey: 'trade_date',
-            footer: 'Trade Date',
-            cell: info =>
-                // format(new Date(info.getValue()), 'ko MMM yyyy') // using date-fns --> Not working
-                DateTime.fromFormat(info.getValue(), 'MM/dd/yyyy').toFormat('LLL d, yyyy') // using luxon
-            // DateTime.fromISO(info.getValue()).toLocaleString(DateTime.DATE_MED), // using luxon
-        },
-        {
-            header: 'Trade Time',
-            accessorKey: 'trade_time',
-            footer: 'Trade Time'
-        },
-        {
-            header: 'Trade Price',
-            accessorKey: 'trade_price',
-            footer: 'Trade Price'
-        },
-        {
-            header: 'Trade Quantity',
-            accessorKey: 'trade_quantity',
-            footer: 'Trade Quantity'
-        },
-        {
-            header: 'Buyer ID',
-            accessorKey: 'buyer_id.$oid',
-            footer: 'Buyer ID',
-            cell: info => <div className='overflow-hidden whitespace-nowrap text-ellipsis w-20' style={{direction: 'rtl'}}>{info.getValue()}</div> 
-        },
-        {
-            header: 'Seller ID',
-            accessorKey: 'seller_id.$oid',
-            footer: 'Seller ID',
-            cell: info => <div className='overflow-hidden whitespace-nowrap text-ellipsis w-20' style={{direction: 'rtl'}}>{info.getValue()}</div> 
-        },
-        {
-            header: 'Buyer Email',
-            accessorKey: 'buyer_email',
-            footer: 'Buyer Email'
-        },
-        {
-            header: 'Seller Email',
-            accessorKey: 'seller_email',
-            footer: 'Seller Email'
-        }
-    ]
-
     const table = useReactTable({
-        data,
-        columns,
+        data: data,
+        columns: columns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         getSortedRowModel: getSortedRowModel(),
@@ -116,10 +26,9 @@ const BasicDataTable = () => {
 
     return (
         <>
-            {/* <div className='m-5 p-5 bg-blue-500 text-white font-bold text-xl'>Basic Data Table</div> */}
             <div className="m-5 bg-white shadow-lg rounded-sm border border-slate-200">
                 <header className="px-5 py-4 border-b border-slate-100">
-                    <h2 className="font-bold capitalize text-xl text-slate-800">All Users of the System</h2>
+                    <h2 className="font-bold capitalize text-xl text-slate-800">{tableTitle}</h2>
                 </header>
                 <div className="p-3">
                     <div className='flex justify-end items-center mb-3 gap-2'>
@@ -133,11 +42,10 @@ const BasicDataTable = () => {
                             onChange={(e) => setFiltering(e.target.value)}
                             className={`block rounded-md border-2 px-3.5 py-2 text-black shadow-sm ring-2 ring-inset ring-color6 focus:ring-color2 placeholder:text-gray-400 focus:outline-none sm:text-sm sm:leading-6`}
                         />
-                        {/* <input type="text" name="searchBox" value={filtering} onChange={(e) => setFiltering(e.target.value)} /> */}
                     </div>
                     <div className="overflow-x-auto">
                         <table className="table-auto w-full">
-                            <thead className="text-xs font-bold uppercase text-black bg-yellow-300">
+                            <thead className={`text-xs font-bold uppercase ${bgColor} ${txtColor}`}>
                                 {table.getHeaderGroups().map(headerGroup => (
                                     <tr key={headerGroup.id}>
                                         {headerGroup.headers.map(header => (
@@ -188,24 +96,24 @@ const BasicDataTable = () => {
                     </div>
                 </div>
                 <div className='flex justify-center items-center'>
-                    <button className='m-2 p-3 bg-amber-300'
+                    <button className={`m-2 p-3 ${bgColor}`}
                         onClick={() => table.setPageIndex(0)}>
-                        <BiFirstPage className='text-2xl text-black' />
+                        <BiFirstPage className={`text-2xl ${txtColor}`} />
                     </button>
-                    <button className={`${!table.getCanPreviousPage() ? 'opacity-50 cursor-not-allowed' : ''} m-2  p-3 bg-amber-300`}
+                    <button className={`${!table.getCanPreviousPage() ? 'opacity-50 cursor-not-allowed' : ''} m-2  p-3 ${bgColor}`}
                         disabled={!table.getCanPreviousPage()}
                         onClick={() => table.previousPage()}
                     >
-                        <GrFormPrevious className='text-2xl text-black' />
+                        <MdOutlineArrowBackIos className={`text-xl ${txtColor}`} />
                     </button>
-                    <button className={`${!table.getCanNextPage() ? 'opacity-50 cursor-not-allowed' : ''} m-2  p-3 bg-amber-300`}
+                    <button className={`${!table.getCanNextPage() ? 'opacity-50 cursor-not-allowed' : ''} m-2  p-3 ${bgColor}`}
                         disabled={!table.getCanNextPage()}
                         onClick={() => table.nextPage()}
                     >
-                        <GrFormNext className='text-2xl text-black' />
+                        <MdOutlineArrowForwardIos className={`text-xl ${txtColor}`} />
                     </button>
-                    <button className='m-2 p-3 bg-amber-300' onClick={() => table.setPageIndex(table.getPageCount() - 1)}>
-                        <BiLastPage className='text-2xl text-black' />
+                    <button className={`m-2 p-3 ${bgColor}`} onClick={() => table.setPageIndex(table.getPageCount() - 1)}>
+                        <BiLastPage className={`text-2xl ${txtColor}`} />
                     </button>
                 </div>
             </div>
