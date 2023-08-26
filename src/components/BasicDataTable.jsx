@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import tradesData from '../../services/TRADE_DATA.json'
 import { format } from 'date-fns'
+import { DateTime } from 'luxon'
 import { BiFirstPage, BiLastPage } from 'react-icons/bi'
 import { GrFormPrevious, GrFormNext } from 'react-icons/gr'
-import { flexRender, useReactTable, getCoreRowModel, getPaginationRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { flexRender, useReactTable, getCoreRowModel, getPaginationRowModel, getSortedRowModel, getFilteredRowModel } from '@tanstack/react-table'
 
 const BasicDataTable = () => {
 
@@ -12,6 +13,7 @@ const BasicDataTable = () => {
     // const [data, setData] = useState([...demoData])
 
     const [sorting, setSorting] = useState([])
+    const [filtering, setFiltering] = useState('')
 
     // const data = []
     const data = useMemo(() => tradesData, [])
@@ -34,8 +36,9 @@ const BasicDataTable = () => {
     const columns = [
         {
             header: 'Trade ID',
-            accessorKey: 'trade_id',
-            footer: 'Trade ID'
+            accessorKey: 'trade_id.$oid',
+            footer: 'Trade ID',
+            cell: info => <div className='overflow-hidden whitespace-nowrap text-ellipsis w-20' style={{direction: 'rtl'}}>{info.getValue()}</div> 
         },
         {
             header: 'Stock Symbol',
@@ -53,8 +56,8 @@ const BasicDataTable = () => {
             accessorKey: 'trade_date',
             footer: 'Trade Date',
             cell: info =>
-                format(new Date(info.getValue()), 'ko MMM yyyy') // using date-fns
-            // DateTime.fromFormat(info.getValue(), 'M/d/yyyy').toFormat('LLL d, yyyy') // using luxon
+                // format(new Date(info.getValue()), 'ko MMM yyyy') // using date-fns --> Not working
+                DateTime.fromFormat(info.getValue(), 'MM/dd/yyyy').toFormat('LLL d, yyyy') // using luxon
             // DateTime.fromISO(info.getValue()).toLocaleString(DateTime.DATE_MED), // using luxon
         },
         {
@@ -74,13 +77,15 @@ const BasicDataTable = () => {
         },
         {
             header: 'Buyer ID',
-            accessorKey: 'buyer_id',
-            footer: 'Buyer ID'
+            accessorKey: 'buyer_id.$oid',
+            footer: 'Buyer ID',
+            cell: info => <div className='overflow-hidden whitespace-nowrap text-ellipsis w-20' style={{direction: 'rtl'}}>{info.getValue()}</div> 
         },
         {
             header: 'Seller ID',
-            accessorKey: 'seller_id',
-            footer: 'Seller ID'
+            accessorKey: 'seller_id.$oid',
+            footer: 'Seller ID',
+            cell: info => <div className='overflow-hidden whitespace-nowrap text-ellipsis w-20' style={{direction: 'rtl'}}>{info.getValue()}</div> 
         },
         {
             header: 'Buyer Email',
@@ -100,10 +105,13 @@ const BasicDataTable = () => {
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         getSortedRowModel: getSortedRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
         state: {
-            sorting: sorting
+            sorting: sorting,
+            globalFilter: filtering
         },
-        onSortingChange: setSorting
+        onSortingChange: setSorting,
+        onGlobalFilterChange: setFiltering
     })
 
     return (
@@ -114,6 +122,19 @@ const BasicDataTable = () => {
                     <h2 className="font-bold capitalize text-xl text-slate-800">All Users of the System</h2>
                 </header>
                 <div className="p-3">
+                    <div className='flex justify-end items-center mb-3 gap-2'>
+                        <label htmlFor="searchBox" className='font-bold'>Search: </label>
+                        <input
+                            type="text"
+                            name="searchBox"
+                            id="searchBox"
+                            autoComplete="searchBox"
+                            value={filtering}
+                            onChange={(e) => setFiltering(e.target.value)}
+                            className={`block rounded-md border-2 px-3.5 py-2 text-black shadow-sm ring-2 ring-inset ring-color6 focus:ring-color2 placeholder:text-gray-400 focus:outline-none sm:text-sm sm:leading-6`}
+                        />
+                        {/* <input type="text" name="searchBox" value={filtering} onChange={(e) => setFiltering(e.target.value)} /> */}
+                    </div>
                     <div className="overflow-x-auto">
                         <table className="table-auto w-full">
                             <thead className="text-xs font-bold uppercase text-black bg-yellow-300">
@@ -138,7 +159,7 @@ const BasicDataTable = () => {
                             <tbody className="text-sm divide-y divide-slate-100">
                                 {table.getRowModel().rows.length ? (
                                     table.getRowModel().rows.map((row, i) => (
-                                        <tr key={row.id} className='lg:h-[72px] hover:bg-slate-100'>
+                                        <tr key={row.id} className='h-[72px] hover:bg-slate-100'>
                                             {row.getVisibleCells().map((cell) => (
                                                 <td key={cell.id} className='p-2 whitespace-nowrap'>
                                                     <div className="text-center font-medium">{flexRender(cell.column.columnDef.cell, cell.getContext())}</div>
