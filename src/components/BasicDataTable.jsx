@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { BiFirstPage, BiLastPage } from 'react-icons/bi'
-import { FcPrevious, FcNext } from 'react-icons/fc'
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md'
 import { flexRender, useReactTable, getCoreRowModel, getPaginationRowModel, getSortedRowModel, getFilteredRowModel } from '@tanstack/react-table'
 
@@ -95,28 +94,68 @@ const BasicDataTable = ({ tableTitle, data, columns, bgColor, txtColor }) => {
                         </table>
                     </div>
                 </div>
-                <div className='flex justify-center items-center'>
-                    <button className={`m-2 p-3 ${bgColor}`}
-                        onClick={() => table.setPageIndex(0)}>
-                        <BiFirstPage className={`text-2xl ${txtColor}`} />
-                    </button>
-                    <button className={`${!table.getCanPreviousPage() ? 'opacity-50 cursor-not-allowed' : ''} m-2  p-3 ${bgColor}`}
-                        disabled={!table.getCanPreviousPage()}
-                        onClick={() => table.previousPage()}
-                    >
-                        <MdOutlineArrowBackIos className={`text-xl ${txtColor}`} />
-                    </button>
-                    <button className={`${!table.getCanNextPage() ? 'opacity-50 cursor-not-allowed' : ''} m-2  p-3 ${bgColor}`}
-                        disabled={!table.getCanNextPage()}
-                        onClick={() => table.nextPage()}
-                    >
-                        <MdOutlineArrowForwardIos className={`text-xl ${txtColor}`} />
-                    </button>
-                    <button className={`m-2 p-3 ${bgColor}`} onClick={() => table.setPageIndex(table.getPageCount() - 1)}>
-                        <BiLastPage className={`text-2xl ${txtColor}`} />
-                    </button>
+                <div className='flex justify-between items-center mx-5'>
+                    <div className='flex justify-center items-center gap-1'>
+                        <span className="flex items-center gap-1">
+                            <div>Page</div>
+                            <strong>
+                                {table.getState().pagination.pageIndex + 1} of{' '}
+                                {table.getPageCount()} {' '}
+                            </strong>
+                        </span>
+                        <span>|</span>
+                        <span className="flex items-center gap-1">
+                            Go to page:
+                            <input
+                                type="number"
+                                defaultValue={table.getState().pagination.pageIndex + 1}
+                                onChange={e => {
+                                    const page = e.target.value ? Number(e.target.value) - 1 : 0
+                                    table.setPageIndex(page)
+                                }}
+                                className={`block w-16 rounded-md border-2 p-1 pl-2 text-black shadow-sm ring-2 ring-inset ring-color6 focus:ring-color2 placeholder:text-gray-400 focus:outline-none sm:text-sm sm:leading-6`}
+                            />
+                        </span>
+                    </div>
+                    <div className='flex justify-center items-center'>
+                        <button className={`m-2 p-3 ${bgColor}`}
+                            onClick={() => table.setPageIndex(0)}>
+                            <BiFirstPage className={`text-2xl ${txtColor}`} />
+                        </button>
+                        <button className={`${!table.getCanPreviousPage() ? 'opacity-50 cursor-not-allowed' : ''} m-2  p-3 ${bgColor}`}
+                            disabled={!table.getCanPreviousPage()}
+                            onClick={() => table.previousPage()}
+                        >
+                            <MdOutlineArrowBackIos className={`text-xl ${txtColor}`} />
+                        </button>
+                        <button className={`${!table.getCanNextPage() ? 'opacity-50 cursor-not-allowed' : ''} m-2  p-3 ${bgColor}`}
+                            disabled={!table.getCanNextPage()}
+                            onClick={() => table.nextPage()}
+                        >
+                            <MdOutlineArrowForwardIos className={`text-xl ${txtColor}`} />
+                        </button>
+                        <button className={`m-2 p-3 ${bgColor}`} onClick={() => table.setPageIndex(table.getPageCount() - 1)}>
+                            <BiLastPage className={`text-2xl ${txtColor}`} />
+                        </button>
+                    </div>
+                    <div className='flex justify-center items-center'>
+                        <select
+                            value={table.getState().pagination.pageSize}
+                            onChange={e => {
+                                table.setPageSize(Number(e.target.value))
+                            }}
+                            className="block w-full rounded-md border-2 p-2 text-black shadow-sm ring-2 ring-inset ring-color6 focus:ring-color2 placeholder:text-gray-400 focus:outline-none sm:text-sm sm:leading-6"
+                        >
+                            {[10, 20, 30, 40, 50].map(pageSize => (
+                                <option key={pageSize} value={pageSize}>
+                                    Show {pageSize}
+                                </option>
+                            ))}
+                        </select>
+                        {/* <div>{table.getRowModel().rows.length} Rows</div> */}
+                    </div>
                 </div>
-            </div>
+            </div >
 
         </>
     )

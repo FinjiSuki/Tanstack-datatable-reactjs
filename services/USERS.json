@@ -1,0 +1,103 @@
+[
+    {
+        "_id": "64e053211be1b33e6bfbd375",
+        "email": "b@gmail.com",
+        "password": "$2b$10$TO9dCyzRSzt7M3Rw9hvbLOhO9nwLizeh0t215hcyqh88/A.up9pNK",
+        "gender": "UNKNOWN",
+        "role": "UNKNOWN",
+        "oauthCredentials": [],
+        "createdAt": "2023-08-19T05:29:05.954Z",
+        "updatedAt": "2023-08-19T05:29:05.954Z",
+        "userName": "b198",
+        "userId": 1004,
+        "__v": 0
+    },
+    {
+        "_id": "64e04da71be1b33e6bfbd362",
+        "email": "a@gmail.com",
+        "password": "$2b$10$0k8Y1gxC34KeLdiDNgsFZeaj/QLLOi7s5OjjHQDN1x7LHuqYfwIIO",
+        "gender": "MALE",
+        "role": "CLIENT",
+        "oauthCredentials": [],
+        "createdAt": "2023-08-19T05:05:43.097Z",
+        "updatedAt": "2023-08-20T11:03:24.686Z",
+        "userName": "a286",
+        "userId": 1003,
+        "__v": 0,
+        "dateOfBirth": "2023-08-16T00:00:00.000Z",
+        "firstName": "Authuro Roman",
+        "lastName": "Megassay Daman",
+        "mobileNumber": "79678484668"
+    },
+    {
+        "_id": "64da69041b544c659f9f9f9c",
+        "userName": "gvubui78879",
+        "firstName": "hbj",
+        "lastName": "hbjnk",
+        "email": "cufijjn@gmail.com",
+        "password": "$2b$10$zTUzrQdzNWVjqo6o/zsdh.RH53jl2UQQgy2CjR4ghEOP8lMUKtSz.",
+        "profilePicture": "https://yt3.googleusercontent.com/-CFTJHU7fEWb7BYEb6Jh9gm1EpetvVGQqtof0Rbh-VQRIznYYKJxCaqv_9HeBcmJmIsp2vOO9JU=s900-c-k-c0x00ffffff-no-rj",
+        "gender": "MALE",
+        "role": "CLIENT",
+        "oauthCredentials": [
+            {
+                "provider": "google",
+                "authId": "000801800000000000453",
+                "authAccessToken": "78h9.a0AfB_byCYSIEyZbL9q1ZGyGjjjjjjjjjjRJ2q7s1MYvIKx8MeooooooooooGC4uAQ9B3LM3iLooooooooooL8FJoS2YAe6VIR2o4gTFvQ2kAotx-cNMlfZoYPU0Y-qtjH2D2glfvYkkkkkkkkkkIpK61rpxLKaCgYKAVQSARASFQHsvhhhhhhhhhhhhhhhhhhhhBgVRw0163",
+                "_id": "64da69041b544c659f9f9f9d",
+                "createdAt": "2023-08-14T17:48:52.432Z",
+                "updatedAt": "2023-08-14T17:48:52.432Z"
+            }
+        ],
+        "createdAt": "2023-08-14T17:48:52.433Z",
+        "updatedAt": "2023-08-17T16:20:34.741Z",
+        "userId": 1002,
+        "__v": 0,
+        "dateOfBirth": "2023-08-18T00:00:00.000Z",
+        "mobileNumber": "79678484668"
+    },
+    {
+        "_id": "64d93152cbb7d77d695b3b1b",
+        "userName": "hnuoin",
+        "firstName": "jih8iuh",
+        "lastName": "jnks",
+        "email": "hbbibuiu@gmail.com",
+        "password": "$2b$10$yJMbOqzf2G.n5ND5Yoc2AulWgQqCWcxEwo1dcOXdCCFjFkbA.QdCS",
+        "profilePicture": "https://yt3.googleusercontent.com/-CFTJHU7fEWb7BYEb6Jh9gm1EpetvVGQqtof0Rbh-VQRIznYYKJxCaqv_9HeBcmJmIsp2vOO9JU=s900-c-k-c0x00ffffff-no-rj",
+        "gender": "MALE",
+        "role": "CLIENT",
+        "oauthCredentials": [
+            {
+                "provider": "google",
+                "authId": "100114863858299997344",
+                "authAccessToken": "78h9.a0AfB_byCYSIEyZbL9q1ZGyGjjjjjjjjjjRJ2q7s1MYvIKx8MeooooooooooGC4uAQ9B3LM3iLooooooooooL8FJoS2YAe6VIR2o4gTFvQ2kAotx-cNMlfZoYPU0Y-qtjH2D2glfvYkkkkkkkkkkIpK61rpxLKaCgYKAVQSARASFQHsvhhhhhhhhhhhhhhhhhhhhBgVRw0163",
+                "_id": "64d93152cbb7d77d695b3b1c",
+                "createdAt": "2023-08-13T19:38:58.317Z",
+                "updatedAt": "2023-08-13T19:38:58.317Z"
+            }
+        ],
+        "createdAt": "2023-08-13T19:38:58.318Z",
+        "updatedAt": "2023-08-19T14:25:57.311Z",
+        "userId": 1001,
+        "__v": 0,
+        "dateOfBirth": "2023-08-19T00:00:00.000Z",
+        "mobileNumber": "918954"
+    },
+    {
+        "_id": "64d89cd3cfdaf230200ec945",
+        "email": "abcd@gmail.com",
+        "password": "$2b$10$jBlQ.gHBo.uygh2jYWEZnOA5d4BCGnTw4Hq9C1xBdvhXkEkK6398K",
+        "gender": "UNKNOWN",
+        "role": "CLIENT",
+        "oauthCredentials": [],
+        "createdAt": "2023-08-13T09:05:23.140Z",
+        "updatedAt": "2023-08-17T16:07:18.804Z",
+        "userName": "abcd838",
+        "userId": 1000,
+        "__v": 0,
+        "dateOfBirth": "2024-01-01T00:00:00.000Z",
+        "firstName": "John",
+        "lastName": "Deer",
+        "mobileNumber": "00000548954"
+    }
+]
