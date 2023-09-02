@@ -25,12 +25,12 @@ const BasicDataTable = ({ tableTitle, data, columns, bgColor, txtColor }) => {
 
     return (
         <>
-            <div className="m-5 bg-white shadow-lg rounded-sm border border-slate-200">
+            <div className="m-3 bg-white shadow-lg rounded-sm border border-slate-200">
                 <header className="px-5 py-4 border-b border-slate-100">
                     <h2 className="font-bold capitalize text-xl text-slate-800">{tableTitle}</h2>
                 </header>
                 <div className="p-3">
-                    <div className='flex justify-end items-center mb-3 gap-2'>
+                    <div className='flex justify-end items-center flex-col sm:flex-row mb-3 gap-2'>
                         <label htmlFor="searchBox" className='font-bold'>Search: </label>
                         <input
                             type="text"
@@ -39,7 +39,7 @@ const BasicDataTable = ({ tableTitle, data, columns, bgColor, txtColor }) => {
                             autoComplete="searchBox"
                             value={filtering}
                             onChange={(e) => setFiltering(e.target.value)}
-                            className={`block rounded-md border-2 px-3.5 py-2 text-black shadow-sm ring-2 ring-inset ring-color6 focus:ring-color2 placeholder:text-gray-400 focus:outline-none sm:text-sm sm:leading-6`}
+                            className={`rounded-md border-2 px-3.5 py-2 text-black shadow-sm ring-2 ring-inset ring-color6 focus:ring-color2 placeholder:text-gray-400 focus:outline-none sm:text-sm sm:leading-6`}
                         />
                     </div>
                     <div className="overflow-x-auto">
@@ -94,7 +94,7 @@ const BasicDataTable = ({ tableTitle, data, columns, bgColor, txtColor }) => {
                         </table>
                     </div>
                 </div>
-                <div className='flex justify-between items-center mx-5'>
+                <div className='flex justify-between items-center flex-col md:flex-row m-5'>
                     <div className='flex justify-center items-center gap-1'>
                         <span className="flex items-center gap-1">
                             <div>Page</div>
